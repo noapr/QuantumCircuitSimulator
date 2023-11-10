@@ -1,20 +1,23 @@
 from one_qubit_quantum_gates import *
 from two_qubits_quantum_gates import *
+from collections import namedtuple
+
+TextIcon = namedtuple('TextIcon', ['target', 'control'])
 
 UNICODE_CIRCLE_X = '\u29BB'
 UNICODE_BULLET = '\u2022'
 
 # name, matrix and icon
 QUANTUM_GATES = [
-    ('identity', identity_matrix, '|I|'),
-    ('pauli_x', pauli_x_matrix, '|X|'),
-    ('pauli_y', pauli_y_matrix, '|Y|'),
-    ('pauli_z', pauli_z_matrix, '|Z|'),
-    ('hadamard', hadamard_matrix, '|H|'),
-    ('phase', phase_matrix, '|S|'),
-    ('not', not_matrix, '|S|'),
-    ('swap', swap_matrix, 'X\n|\nX'),
-    ('cnot', swap_matrix, f'{UNICODE_BULLET}\n|\n{UNICODE_CIRCLE_X}')
+    ('identity', identity_matrix, TextIcon(target='|I|', control=None)),
+    ('pauli_x', pauli_x_matrix, TextIcon(target='|X|', control=None)),
+    ('pauli_y', pauli_y_matrix, TextIcon(target='|Y|', control=None)),
+    ('pauli_z', pauli_z_matrix, TextIcon(target='|Z|', control=None)),
+    ('hadamard', hadamard_matrix, TextIcon(target='|H|', control=None)),
+    ('phase', phase_matrix, TextIcon(target='|S|', control=None)),
+    ('not', not_matrix, TextIcon(target='|+|', control=None)),
+    ('swap', swap_matrix, TextIcon(target='X', control='X')),
+    ('cnot', cnot_matrix, TextIcon(target=UNICODE_CIRCLE_X, control=UNICODE_BULLET))
 ]
 
 
