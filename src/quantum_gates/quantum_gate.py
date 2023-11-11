@@ -5,7 +5,7 @@ from src.quantum_gates.two_qubits_quantum_gates import *
 TextIcon = namedtuple('TextIcon', ['target', 'control'])
 
 UNICODE_CIRCLE_X = '\u29BB'
-UNICODE_BULLET = '\u2022'
+UNICODE_BULLET = '\u25CF'
 
 # name, matrix and icon
 QUANTUM_GATES = [
