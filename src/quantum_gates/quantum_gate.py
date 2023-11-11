@@ -1,6 +1,6 @@
-from one_qubit_quantum_gates import *
-from two_qubits_quantum_gates import *
 from collections import namedtuple
+from src.quantum_gates.one_qubit_quantum_gates import *
+from src.quantum_gates.two_qubits_quantum_gates import *
 
 TextIcon = namedtuple('TextIcon', ['target', 'control'])
 
@@ -16,8 +16,8 @@ QUANTUM_GATES = [
     ('hadamard', hadamard_matrix, TextIcon(target='|H|', control=None)),
     ('phase', phase_matrix, TextIcon(target='|S|', control=None)),
     ('not', not_matrix, TextIcon(target='|+|', control=None)),
-    ('swap', swap_matrix, TextIcon(target='X', control='X')),
-    ('cnot', cnot_matrix, TextIcon(target=UNICODE_CIRCLE_X, control=UNICODE_BULLET))
+    ('swap', swap_matrix, TextIcon(target='-X-', control='-X-')),
+    ('cnot', cnot_matrix, TextIcon(target=f'-{UNICODE_CIRCLE_X}-', control=f'-{UNICODE_BULLET}-'))
 ]
 
 
