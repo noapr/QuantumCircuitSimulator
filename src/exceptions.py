@@ -25,3 +25,11 @@ class InvalidControlError(QuantumCircuitError):
 
     def __init__(self, gate_name):
         super().__init__(f"Gate '{gate_name}' does not support a control qubit.")
+
+
+# src/exceptions.py
+class MissingControlError(QuantumCircuitError):
+    """Exception raised when a control qubit is missing for a two-qubit gate."""
+
+    def __init__(self, gate_name):
+        super().__init__(f"A control qubit is required for the two-qubit gate '{gate_name}'.")
