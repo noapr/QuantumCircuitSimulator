@@ -1,5 +1,6 @@
 from collections import namedtuple
 from src.quantum_gates.quantum_gate import get_quantum_gate_list
+from src.exceptions import GateNotFoundError, InvalidGatePositionError, InvalidControlError
 
 GateTargetControl = namedtuple('GateTargetControl', ['gate', 'target', 'control'])
 
@@ -11,13 +12,20 @@ class QuantumCircuit:
         self.__gates = []
 
     def add_gate(self, name, target, control=None):
-        self.__gates.append(GateTargetControl(self.__get_gate_object(name), target, control))
+        gate_obj = self.__get_gate_object(name)
+        if not gate_obj.is_two_qubit_gate():
+            raise InvalidControlError(name)
+
+        if target >= self.input_size or control >= self.input_size or target < 0 or control < 0:
+            raise InvalidGatePositionError(target, control)
+
+        self.__gates.append(GateTargetControl(gate_obj, target, control))
 
     def __get_gate_object(self, name):
         for gate in self.__supported_gates_list:
             if gate.name == name:
                 return gate
-        raise Exception
+        raise GateNotFoundError(name)
 
     def show(self):
         CONNECTION = '|'
@@ -55,15 +63,3 @@ class QuantumCircuit:
             print(circuit[i])
             print(gap_lines[i])
         print(circuit[-1])
-
-
-if __name__ == '__main__':
-    c = QuantumCircuit(4)
-    c.add_gate('not', 0)
-    c.add_gate('not', 3)
-    c.add_gate('cnot', 1, 3)
-    c.add_gate('hadamard',1)
-    c.add_gate('hadamard',0)
-    c.add_gate('cnot', 0, 2)
-    c.add_gate('cnot', 2, 3)
-    c.show()

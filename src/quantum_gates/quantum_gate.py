@@ -27,6 +27,9 @@ class QuantumGate:
         self.operation = operation
         self.icon = icon
 
+    def is_two_qubit_gate(self):
+        return not (self.icon.control is None)
+
 
 def get_quantum_gate_list():
     return [QuantumGate(gate[0], gate[1], gate[2]) for gate in QUANTUM_GATES]
