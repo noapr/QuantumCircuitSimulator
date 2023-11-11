@@ -2,7 +2,7 @@ import unittest
 from io import StringIO
 from contextlib import redirect_stdout
 from src.quantum_circuit import QuantumCircuit
-from src.exceptions import InvalidGatePositionError, InvalidControlError, MissingControlError
+from src.exceptions import InvalidGatePositionError, InvalidControlError, MissingControlError, GateNotFoundError
 
 
 class TestQuantumCircuit(unittest.TestCase):
@@ -38,6 +38,10 @@ class TestQuantumCircuit(unittest.TestCase):
         # Test adding a two-qubit gate without providing a control qubit
         with self.assertRaises(MissingControlError):
             self.qc.add_gate('cnot', target=1)
+
+    def test_add_invalid_gate_name(self):
+        with self.assertRaises(GateNotFoundError):
+            self.qc.add_gate('invalid_gate', target=0)
 
     def test_show_circuit(self):
         # Test displaying the circuit and check if the output matches the expected output
