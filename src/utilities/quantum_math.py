@@ -58,7 +58,7 @@ def get_linear_dependence_on_basis_vectors(vector, normalize=True):
         if is_ket_vector(vector):
             linear_dependence.append(np.dot(np.conj(shared_space_vector_tuple.base_vector).T, vector)[0][0])
         if is_bra_vector(vector):
-            linear_dependence.append(np.conj(np.dot(vector, shared_space_vector_tuple.base_vector))[0][0])
+            linear_dependence.append(np.conj(np.dot(np.conj(shared_space_vector_tuple.base_vector).T, np.conj(vector).T))[0][0])
 
     if normalize:
         norm = np.linalg.norm(linear_dependence)

@@ -83,10 +83,20 @@ class TestVectorOperations(unittest.TestCase):
             linear_dependence = get_linear_dependence_on_basis_vectors(bra_vector, False)
             self.assertListEqual(linear_dependence, [1, 1, 0, 1])
 
+        with self.subTest('call function with complex bra and normalize = False.'):
+            bra_vector = np.array([[1, 1j, 0, 1]])
+            linear_dependence = get_linear_dependence_on_basis_vectors(bra_vector, False)
+            self.assertListEqual(linear_dependence, [1, 1j, 0, 1])
+
         with self.subTest('call function with ket and normalize = False.'):
             ket_vector = np.array([[1], [1], [0], [1]])
             linear_dependence = get_linear_dependence_on_basis_vectors(ket_vector, False)
             self.assertListEqual(linear_dependence, [1, 1, 0, 1])
+
+        with self.subTest('call function with complex ket and normalize = False.'):
+            ket_vector = np.array([[1], [1j], [0], [1]])
+            linear_dependence = get_linear_dependence_on_basis_vectors(ket_vector, False)
+            self.assertListEqual(linear_dependence, [1, 1j, 0, 1])
 
         with self.subTest('call function with bra and normalize = True.'):
             bra_vector = np.array([[1, 0, 0, 1]])
