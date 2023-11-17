@@ -27,9 +27,19 @@ class InvalidControlError(QuantumCircuitError):
         super().__init__(f"Gate '{gate_name}' does not support a control qubit.")
 
 
-# src/exceptions.py
+# src/quantum_circuit_exceptions.py
 class MissingControlError(QuantumCircuitError):
     """Exception raised when a control qubit is missing for a two-qubit gate."""
 
     def __init__(self, gate_name):
         super().__init__(f"A control qubit is required for the two-qubit gate '{gate_name}'.")
+
+
+class QubitMismatchError(QuantumCircuitError):
+    """Exception raised for mismatch between the number of input qubits and the circuit size."""
+
+    def __init__(self, expected_qubits, actual_qubits):
+        self.expected_qubits = expected_qubits
+        self.actual_qubits = actual_qubits
+        message = f"Mismatch in the number of input qubits. Expected {expected_qubits}, but got {actual_qubits}."
+        super().__init__(message)
