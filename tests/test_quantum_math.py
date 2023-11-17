@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 from src.exceptions.vector_exception import NotBraVectorError, NotKetVectorError, VectorError
-from src.utilities.quantum_math import calculate_density_matrix, get_bra_vector, get_ket_vector, is_ket_vector, is_bra_vector, is_entangled
+from src.utilities.quantum_math import calculate_density_matrix, get_bra_vector, get_ket_vector, is_ket_vector, is_bra_vector, is_entangled, get_linear_dependence_on_basis_vectors
 
 
 class TestVectorOperations(unittest.TestCase):
@@ -56,18 +56,43 @@ class TestVectorOperations(unittest.TestCase):
         self.assertFalse(is_bra_vector(non_bra_vector))
 
     def test_is_entangled(self):
-        with self.subTest('call is_entangled function with entangled bra.'):
+        with self.subTest('call function with entangled bra.'):
             entangled_bra = np.array([[1, 0, 0, 1]])  # Bell state 1/sqrt(2) * (|00⟩ + |11⟩)
             self.assertTrue(is_entangled(entangled_bra))
 
-        with self.subTest('call is_entangled function with non entangled bra.'):
+        with self.subTest('call function with non entangled bra.'):
             non_entangled_bra = np.array([[1, 0, 0, 0]])
             self.assertFalse(is_entangled(non_entangled_bra))
 
-        with self.subTest('call is_entangled function with non bra vector)'):
-            non_bra_vector = np.array([[1], [0]])
-            with self.assertRaises(NotBraVectorError):
-                is_entangled(non_bra_vector)
+        with self.subTest('call function with entangled ket.'):
+            entangled_ket = np.array([[1], [0], [0], [1]])  # Bell state 1/sqrt(2) * (|00⟩ + |11⟩)
+            self.assertTrue(is_entangled(entangled_ket))
+
+        with self.subTest('call function with non entangled ket.'):
+            non_entangled_ket = np.array([[1], [0], [0], [0]])
+            self.assertFalse(is_entangled(non_entangled_ket))
+
+        with self.subTest('call function with non bra or ket vector)'):
+            invalid_vector = np.array([[1, 6], [0, 5]])
+            with self.assertRaises(VectorError):
+                is_entangled(invalid_vector)
+
+    def test_get_linear_dependence_on_basis_vectors(self):
+        with self.subTest('call function with bra and normalize = False.'):
+            bra_vector = np.array([[1, 1, 0, 1]])
+            linear_dependence = get_linear_dependence_on_basis_vectors(bra_vector, False)
+            self.assertListEqual(linear_dependence, [1, 1, 0, 1])
+
+        with self.subTest('call function with ket and normalize = False.'):
+            ket_vector = np.array([[1], [1], [0], [1]])
+            linear_dependence = get_linear_dependence_on_basis_vectors(ket_vector, False)
+            self.assertListEqual(linear_dependence, [1, 1, 0, 1])
+
+        with self.subTest('call function with bra and normalize = True.'):
+            bra_vector = np.array([[1, 0, 0, 1]])
+            linear_dependence = get_linear_dependence_on_basis_vectors(bra_vector)
+            expected_result = ((1 / np.sqrt(2)) * np.array([1, 0, 0, 1])).tolist()
+            np.testing.assert_array_equal(linear_dependence, expected_result)
 
 
 if __name__ == '__main__':
