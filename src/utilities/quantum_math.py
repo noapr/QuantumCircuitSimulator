@@ -56,11 +56,27 @@ def get_linear_dependence_on_basis_vectors(vector, normalize=True):
     linear_dependence = []
     for shared_space_vector_tuple in TWO_QUBIT_SHARED_SPACE:
         if is_ket_vector(vector):
-            linear_dependence.append(np.dot(np.conj(shared_space_vector_tuple.base_vector).T, vector)[0][0])
+            val = np.dot(np.conj(shared_space_vector_tuple.base_vector).T, vector)[0][0]
+            linear_dependence.append(val)
         if is_bra_vector(vector):
-            linear_dependence.append(np.conj(np.dot(np.conj(shared_space_vector_tuple.base_vector).T, np.conj(vector).T))[0][0])
+            val = np.conj(np.dot(np.conj(shared_space_vector_tuple.base_vector).T, np.conj(vector).T))[0][0]
+            linear_dependence.append(val)
 
     if normalize:
         norm = np.linalg.norm(linear_dependence)
         linear_dependence = linear_dependence / norm
     return linear_dependence
+
+
+def get_qubit_states_from_shared_space(shared_state):
+    linear_dependence = get_linear_dependence_on_basis_vectors(shared_state)
+    left_qubit = np.array([[0], [0]], dtype=np.float64)
+    right_qubit = np.array([[0], [0]], dtype=np.float64)
+    i = 0
+    for shared_space_vector_tuple in TWO_QUBIT_SHARED_SPACE:
+        coefficient = linear_dependence[i]
+        left_qubit += shared_space_vector_tuple.left_qubit * coefficient
+        right_qubit += shared_space_vector_tuple.right_qubit * coefficient
+        i += 1
+
+    return left_qubit, right_qubit

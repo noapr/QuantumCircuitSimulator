@@ -1,7 +1,9 @@
 import unittest
 import numpy as np
 from src.exceptions.vector_exception import NotBraVectorError, NotKetVectorError, VectorError
-from src.utilities.quantum_math import calculate_density_matrix, get_bra_vector, get_ket_vector, is_ket_vector, is_bra_vector, is_entangled, get_linear_dependence_on_basis_vectors
+from src.utilities.quantum_constants import ONE_STATE_KET, ZERO_STATE_KET
+from src.utilities.quantum_math import calculate_density_matrix, get_bra_vector, get_ket_vector, is_ket_vector, is_bra_vector, is_entangled, get_linear_dependence_on_basis_vectors, \
+    get_qubit_states_from_shared_space
 
 
 class TestVectorOperations(unittest.TestCase):
@@ -103,6 +105,14 @@ class TestVectorOperations(unittest.TestCase):
             linear_dependence = get_linear_dependence_on_basis_vectors(bra_vector)
             expected_result = ((1 / np.sqrt(2)) * np.array([1, 0, 0, 1])).tolist()
             np.testing.assert_array_equal(linear_dependence, expected_result)
+
+    def test_get_qubit_states_from_shared_space(self):
+        shared_state = np.array([[0, 1, -1, 0]])  # Bell state 1/sqrt(2) * (|01⟩ - |10⟩)
+        left_qubit, right_qubit = get_qubit_states_from_shared_space(shared_state)
+        expected_left_qubit = (1 / np.sqrt(2)) * (ZERO_STATE_KET - ONE_STATE_KET)
+        expected_right_qubit = (1 / np.sqrt(2)) * (ONE_STATE_KET - ZERO_STATE_KET)
+        np.testing.assert_array_equal(left_qubit, expected_left_qubit)
+        np.testing.assert_array_equal(right_qubit, expected_right_qubit)
 
 
 if __name__ == '__main__':
