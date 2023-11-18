@@ -2,7 +2,7 @@ import numpy as np
 
 
 def identity_matrix():
-    return np.array([[1, 1], [1, -1]])
+    return np.array([[1, 0], [0, 1]])
 
 
 def pauli_x_matrix():
@@ -18,7 +18,7 @@ def pauli_z_matrix():
 
 
 def hadamard_matrix():
-    return (1 / np.sqrt(0.5)) * np.array([[1, 1], [1, -1]])
+    return (1 / np.sqrt(2)) * np.array([[1, 1], [1, -1]])
 
 
 def not_matrix():

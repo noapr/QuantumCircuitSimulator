@@ -2,7 +2,7 @@ import unittest
 from io import StringIO
 from contextlib import redirect_stdout
 from src.quantum_circuit import QuantumCircuit
-from src.exceptions import InvalidGatePositionError, InvalidControlError, MissingControlError, GateNotFoundError
+from src.exceptions.quantum_circuit_exceptions import InvalidGatePositionError, InvalidControlError, MissingControlError, GateNotFoundError, QubitMismatchError
 
 
 class TestQuantumCircuit(unittest.TestCase):
@@ -60,6 +60,11 @@ class TestQuantumCircuit(unittest.TestCase):
             actual_output = buffer.getvalue()
 
         self.assertEqual(actual_output.strip(), expected_output.strip())
+
+    def test_apply_circuit_qubit_mismatch(self):
+        # Test applying a circuit with a mismatch in the number of input qubits
+        with self.assertRaises(QubitMismatchError) as context:
+            self.qc.apply_circuit(0, 1, 2, 3)
 
 
 if __name__ == '__main__':
