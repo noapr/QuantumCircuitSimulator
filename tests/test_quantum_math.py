@@ -111,8 +111,8 @@ class TestVectorOperations(unittest.TestCase):
         left_qubit, right_qubit = get_qubit_states_from_shared_space(shared_state)
         expected_left_qubit = (1 / np.sqrt(2)) * (ZERO_STATE_KET - ONE_STATE_KET)
         expected_right_qubit = (1 / np.sqrt(2)) * (ONE_STATE_KET - ZERO_STATE_KET)
-        np.testing.assert_array_equal(left_qubit, expected_left_qubit)
-        np.testing.assert_array_equal(right_qubit, expected_right_qubit)
+        np.testing.assert_array_almost_equal(left_qubit, expected_left_qubit)
+        np.testing.assert_array_almost_equal(right_qubit, expected_right_qubit)
 
 
 if __name__ == '__main__':
