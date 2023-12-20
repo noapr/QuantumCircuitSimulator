@@ -41,5 +41,12 @@ class QubitMismatchError(QuantumCircuitError):
     def __init__(self, expected_qubits, actual_qubits):
         self.expected_qubits = expected_qubits
         self.actual_qubits = actual_qubits
-        message = f"Mismatch in the number of input qubits. Expected {expected_qubits}, but got {actual_qubits}."
-        super().__init__(message)
+        super().__init__(f"Mismatch in the number of input qubits. Expected {expected_qubits}, but got {actual_qubits}.")
+
+
+class ExceedsQubitLimitError(QuantumCircuitError):
+    """Exception raised when attempting to apply a circuit to more than two qubits."""
+
+    def __init__(self, number_of_qubits):
+        self.number_of_qubits = number_of_qubits
+        super().__init__("Circuit cannot be applied to more than two qubits.")

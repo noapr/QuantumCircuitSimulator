@@ -1,6 +1,7 @@
 from collections import namedtuple
 from src.quantum_gates.quantum_gate import get_quantum_gate_list
-from src.exceptions.quantum_circuit_exceptions import GateNotFoundError, InvalidGatePositionError, InvalidControlError, MissingControlError, QubitMismatchError
+from src.exceptions.quantum_circuit_exceptions import GateNotFoundError, InvalidGatePositionError, InvalidControlError, MissingControlError, QubitMismatchError, \
+    ExceedsQubitLimitError
 
 GateTargetControl = namedtuple('GateTargetControl', ['gate', 'target', 'control'])
 
@@ -70,6 +71,9 @@ class QuantumCircuit:
     def apply_circuit(self, *qubits):
         if self.input_size != len(qubits):
             raise QubitMismatchError(expected_qubits=self.input_size, actual_qubits=len(qubits))
+        if len(qubits) > 2:
+            raise ExceedsQubitLimitError(len(qubits))
+        
         for gate_tuple in self.__gates:
             control_qubit = None
             if gate_tuple.control is not None:

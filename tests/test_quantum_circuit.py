@@ -2,7 +2,9 @@ import unittest
 from io import StringIO
 from contextlib import redirect_stdout
 from src.quantum_circuit import QuantumCircuit
-from src.exceptions.quantum_circuit_exceptions import InvalidGatePositionError, InvalidControlError, MissingControlError, GateNotFoundError, QubitMismatchError
+from src.exceptions.quantum_circuit_exceptions import InvalidGatePositionError, InvalidControlError, MissingControlError, GateNotFoundError, QubitMismatchError, \
+    ExceedsQubitLimitError
+from src.qubit import Qubit
 
 
 class TestQuantumCircuit(unittest.TestCase):
@@ -65,6 +67,15 @@ class TestQuantumCircuit(unittest.TestCase):
         # Test applying a circuit with a mismatch in the number of input qubits
         with self.assertRaises(QubitMismatchError) as context:
             self.qc.apply_circuit(0, 1, 2, 3)
+
+    def test_exceeds_qubit_limit_error(self):
+        qubit1 = Qubit()
+        qubit2 = Qubit()
+        qubit3 = Qubit()
+
+        # Test for raising the ExceedsQubitLimitError
+        with self.assertRaises(ExceedsQubitLimitError) as context:
+            self.qc.apply_circuit(qubit1, qubit2, qubit3)
 
 
 if __name__ == '__main__':
