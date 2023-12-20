@@ -8,7 +8,7 @@ QuantumCircuitSimulator is a Python-based simulation tool for building and apply
 To set up the QuantumCircuitSimulator, clone this repository and install the required dependencies.
 
 ```bash
-git clone https://your-repository-link
+git clone https://github.com/noapr/QuantumCircuitSimulator.git
 cd QuantumCircuitSimulator
 pip install -r requirements.txt
 ```
