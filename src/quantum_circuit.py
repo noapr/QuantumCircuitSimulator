@@ -71,4 +71,7 @@ class QuantumCircuit:
         if self.input_size != len(qubits):
             raise QubitMismatchError(expected_qubits=self.input_size, actual_qubits=len(qubits))
         for gate_tuple in self.__gates:
-            qubits[gate_tuple['target']].aapply_gate(gate_tuple['gate'], gate_tuple['control'])
+            control_qubit = None
+            if gate_tuple.control is not None:
+                control_qubit = qubits[gate_tuple.control]
+            qubits[gate_tuple.target].apply_gate(gate_tuple.gate, control_qubit)

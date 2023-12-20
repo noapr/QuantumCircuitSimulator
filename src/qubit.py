@@ -1,7 +1,8 @@
 import numpy as np
+from sympy import nsimplify, sqrt
 from src.entangled_system import EntangledSystem
 from src.exceptions.quantum_circuit_exceptions import MissingControlError
-from src.utilities.quantum_constants import ZERO_STATE_KET, ONE_STATE_KET, TWO_QUBIT_SHARED_SPACE
+from src.utilities.quantum_constants import ZERO_STATE_KET, ONE_STATE_KET, TWO_QUBIT_SHARED_SPACE, ZERO_STATE_KET_STRING, ONE_STATE_KET_STRING
 from src.utilities.quantum_math import is_entangled, get_qubit_states_from_shared_space, get_linear_dependence_on_basis_vectors
 
 
@@ -9,6 +10,18 @@ class Qubit:
     def __init__(self):
         self.state = ZERO_STATE_KET
         self.entangled_system = None
+
+    def __str__(self):
+        if all(self.state == ZERO_STATE_KET):
+            return ZERO_STATE_KET_STRING
+        elif all(self.state == ONE_STATE_KET):
+            return ONE_STATE_KET_STRING
+        else:
+            pre_zero_state = (self.state * ZERO_STATE_KET)[0][0]
+            simplified_pre_zero_expression = nsimplify(pre_zero_state, [sqrt(2), sqrt(3), sqrt(5), sqrt(7), sqrt(11)])
+            pre_one_state = (self.state * ONE_STATE_KET)[1][0]
+            simplified_pre_one_expression = nsimplify(pre_one_state, [sqrt(2), sqrt(3), sqrt(5), sqrt(7), sqrt(11)])
+            return f"{simplified_pre_zero_expression} * {ZERO_STATE_KET_STRING} + {simplified_pre_one_expression} * {ONE_STATE_KET_STRING}"
 
     def apply_gate(self, gate, control_qubit=None):
         if gate.is_two_qubit_gate():
