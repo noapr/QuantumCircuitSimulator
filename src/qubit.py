@@ -49,6 +49,7 @@ class Qubit:
         else:
             self._apply_measure_result_on_entangled_system(ONE_STATE_KET)
             self.state = ONE_STATE_KET
+        return self.state
 
     def _apply_measure_result_on_entangled_system(self, measure_result):
 
