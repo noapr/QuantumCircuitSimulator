@@ -11,6 +11,9 @@ class QuantumCircuit:
         self.__supported_gates_list = get_quantum_gate_list()
         self.__gates = []
 
+    def __len__(self):
+        return len(self.__gates)
+
     def add_gate(self, name, target, control=None):
         gate_obj = self.__get_gate_object(name)
         if gate_obj.is_two_qubit_gate() and control is None:
