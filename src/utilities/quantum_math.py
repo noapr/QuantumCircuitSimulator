@@ -79,4 +79,4 @@ def get_qubit_states_from_shared_space(shared_state):
         right_qubit += shared_space_vector_tuple.right_qubit * coefficient
         i += 1
 
-    return left_qubit, right_qubit
+    return left_qubit / np.linalg.norm(left_qubit), right_qubit / np.linalg.norm(right_qubit)
