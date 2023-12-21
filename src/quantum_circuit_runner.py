@@ -40,7 +40,7 @@ class QuantumCircuitRunner:
         plt.hist(flat_results, bins=np.arange(self.circuit.input_size + 1) - 0.5, align="mid", rwidth=0.8, density=True)
         plt.xlabel("Measurement Outcome")
         plt.ylabel("Probability Density")
-        plt.title(f"Measurement Results\nNumber of runnings: {len(results)}")
+        plt.title(f"Measurement Results\nNumber of runs: {len(results)}")
         plt.xticks(range(self.circuit.input_size))
         plt.grid(axis="y", alpha=0.75)
         plt.show()
