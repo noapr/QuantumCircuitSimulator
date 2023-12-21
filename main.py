@@ -4,7 +4,9 @@ from src.quantum_circuit import QuantumCircuit
 from src.qubit import Qubit
 
 # Configure the logging module to print to the console
-logging.basicConfig(stream=sys.stdout, level=logging.DEBUG, format='%(asctime)s [%(levelname)s]: %(message)s')
+RED = '\x1b[31m'
+RESET = '\x1b[0m'
+logging.basicConfig(stream=sys.stdout, level=logging.DEBUG, format=RED+'%(asctime)s [%(levelname)s]: %(message)s'+RESET)
 
 
 def main():
