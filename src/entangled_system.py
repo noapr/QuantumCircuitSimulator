@@ -12,7 +12,9 @@ class EntangledSystem:
 
     def __str__(self):
         linear_dependence = [nsimplify(num, [sqrt(2), sqrt(3), sqrt(5), sqrt(7), sqrt(11)]) for num in get_linear_dependence_on_basis_vectors(self.state)]
-        return f"{linear_dependence[0]} * {TWO_QUBIT_SHARED_SPACE_BASE_STRING[0]} + " \
-               f"{linear_dependence[1]} * {TWO_QUBIT_SHARED_SPACE_BASE_STRING[1]} + " \
-               f"{linear_dependence[2]} * {TWO_QUBIT_SHARED_SPACE_BASE_STRING[2]} + " \
-               f"{linear_dependence[3]} * {TWO_QUBIT_SHARED_SPACE_BASE_STRING[3]}"
+        entangled_system_string = ''
+        for i in range(len(linear_dependence)):
+            if linear_dependence[i] != 0:
+                entangled_system_string += f"{linear_dependence[i]} * {TWO_QUBIT_SHARED_SPACE_BASE_STRING[i]} +"
+        entangled_system_string = entangled_system_string[:-2]
+        return entangled_system_string
