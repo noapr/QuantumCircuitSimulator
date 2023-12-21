@@ -1,4 +1,5 @@
 from collections import namedtuple
+import logging
 from src.quantum_gates.quantum_gate import get_quantum_gate_list
 from src.exceptions.quantum_circuit_exceptions import GateNotFoundError, InvalidGatePositionError, InvalidControlError, MissingControlError, QubitMismatchError, \
     ExceedsQubitLimitError
@@ -23,6 +24,8 @@ class QuantumCircuit:
             raise InvalidControlError(name)
         elif gate_obj.is_two_qubit_gate() and (target >= self.input_size or control >= self.input_size or target < 0 or control < 0):
             raise InvalidGatePositionError(target, control)
+
+        logging.debug(f"The gate {name} successfully added to the quantum circuit.")
         self.__gates.append(GateTargetControl(gate_obj, target, control))
 
     def __get_gate_object(self, name):
@@ -73,9 +76,21 @@ class QuantumCircuit:
             raise QubitMismatchError(expected_qubits=self.input_size, actual_qubits=len(qubits))
         if len(qubits) > 2:
             raise ExceedsQubitLimitError(len(qubits))
-        
+
+        for i in range(len(qubits)):
+            logging.debug(f"Initial state of qubit {i + 1} is: {qubits[i]}")
+
         for gate_tuple in self.__gates:
             control_qubit = None
             if gate_tuple.control is not None:
                 control_qubit = qubits[gate_tuple.control]
             qubits[gate_tuple.target].apply_gate(gate_tuple.gate, control_qubit)
+
+            if control_qubit is None:
+                logging.debug(f"The gate {gate_tuple.gate.name} successfully applied on qubit {gate_tuple.target + 1}")
+            else:
+                logging.debug(f"The gate {gate_tuple.gate.name} successfully applied on qubit {gate_tuple.target + 1} with control qubit {gate_tuple.control +1}")
+            for i in range(len(qubits)):
+                logging.debug(f"Qubit {i+1} state: {qubits[i]}")
+            if qubits[gate_tuple.target].entangled_system is not None:
+                logging.debug(f"Qubits 1 and 2 in entangled system: {qubits[gate_tuple.target].entangled_system}")

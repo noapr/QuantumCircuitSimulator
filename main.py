@@ -1,5 +1,10 @@
 from src.quantum_circuit import QuantumCircuit
 from src.qubit import Qubit
+import logging
+
+
+def configure_logging():
+    logging.basicConfig(level=logging.DEBUG, format='%(asctime)s [%(levelname)s]: %(message)s')
 
 
 def main():
@@ -34,4 +39,5 @@ def main():
 
 
 if __name__ == "__main__":
+    configure_logging()
     main()
