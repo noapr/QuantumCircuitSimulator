@@ -1,9 +1,12 @@
+import logging
 import numpy as np
 import matplotlib.pyplot as plt
 from src.exceptions.quantum_circuit_exceptions import ExceedsQubitLimitError
 from src.qubit import Qubit
 from src.utilities.quantum_constants import ZERO_STATE_KET_STRING, ZERO_STATE_KET, ONE_STATE_KET, ONE_STATE_KET_STRING
 from src.utilities.quantum_math import get_base_shared_space_from_two_qubit_states
+
+logging.getLogger('matplotlib').setLevel(logging.WARNING)
 
 
 class QuantumCircuitRunner:
