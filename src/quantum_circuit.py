@@ -1,5 +1,5 @@
-from collections import namedtuple
 import logging
+from collections import namedtuple
 from src.quantum_gates.quantum_gate import get_quantum_gate_list
 from src.exceptions.quantum_circuit_exceptions import GateNotFoundError, InvalidGatePositionError, InvalidControlError, MissingControlError, QubitMismatchError, \
     ExceedsQubitLimitError
@@ -89,8 +89,8 @@ class QuantumCircuit:
             if control_qubit is None:
                 logging.debug(f"The gate {gate_tuple.gate.name} successfully applied on qubit {gate_tuple.target + 1}")
             else:
-                logging.debug(f"The gate {gate_tuple.gate.name} successfully applied on qubit {gate_tuple.target + 1} with control qubit {gate_tuple.control +1}")
+                logging.debug(f"The gate {gate_tuple.gate.name} successfully applied on qubit {gate_tuple.target + 1} with control qubit {gate_tuple.control + 1}")
             for i in range(len(qubits)):
-                logging.debug(f"Qubit {i+1} state: {qubits[i]}")
+                logging.debug(f"Qubit {i + 1} state: {qubits[i]}")
             if qubits[gate_tuple.target].entangled_system is not None:
                 logging.debug(f"Qubits 1 and 2 in entangled system: {qubits[gate_tuple.target].entangled_system}")

@@ -1,14 +1,15 @@
+import logging
+import sys
 from src.quantum_circuit import QuantumCircuit
 from src.qubit import Qubit
-import logging
 
-
-def configure_logging():
-    logging.basicConfig(level=logging.DEBUG, format='%(asctime)s [%(levelname)s]: %(message)s')
+# Configure the logging module to print to the console
+logging.basicConfig(stream=sys.stdout, level=logging.DEBUG, format='%(asctime)s [%(levelname)s]: %(message)s')
 
 
 def main():
     # Create a quantum circuit with 2 qubits
+    print(f"Creating a quantum circuit with 2 qubits...")
     qc = QuantumCircuit(2)
 
     # Add gates to the circuit
@@ -26,18 +27,18 @@ def main():
     print(f"Initial state of Qubit 2: {qubit2}")
 
     # Apply the circuit to the qubits
+    print(f"\nApplying the circuit to the qubits...")
     qc.apply_circuit(qubit1, qubit2)
-    print(f"\nApplying the circuit to the qubits...\n")
 
     # Measure the qubits
     qubit1.measure()
     qubit2.measure()
 
     # Print the results
+    print(f"\nMeasuring the qubits...")
     print(f"Measurement of Qubit 1: {qubit1}")
     print(f"Measurement of Qubit 2: {qubit2}")
 
 
 if __name__ == "__main__":
-    configure_logging()
     main()
