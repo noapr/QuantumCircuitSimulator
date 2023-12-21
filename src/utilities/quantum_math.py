@@ -80,3 +80,10 @@ def get_qubit_states_from_shared_space(shared_state):
         i += 1
 
     return left_qubit / np.linalg.norm(left_qubit), right_qubit / np.linalg.norm(right_qubit)
+
+
+def get_base_shared_space_from_two_qubit_states(qubit_one_state, qubit_two_state):
+    for shared_space_vector_tuple in TWO_QUBIT_SHARED_SPACE:
+        if all(qubit_one_state == shared_space_vector_tuple.left_qubit) and all(qubit_two_state == shared_space_vector_tuple.right_qubit):
+            return shared_space_vector_tuple
+    return None
