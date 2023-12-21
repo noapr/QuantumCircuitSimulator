@@ -1,12 +1,13 @@
 import logging
 import sys
 from src.quantum_circuit import QuantumCircuit
+from src.quantum_circuit_runner import QuantumCircuitRunner
 from src.qubit import Qubit
 
 # Configure the logging module to print to the console
 RED = '\x1b[31m'
 RESET = '\x1b[0m'
-logging.basicConfig(stream=sys.stdout, level=logging.DEBUG, format=RED + '%(asctime)s [%(levelname)s]: %(message)s' + RESET)
+logging.basicConfig(stream=sys.stdout, level=logging.INFO, format=RED + '%(asctime)s [%(levelname)s]: %(message)s' + RESET)
 
 
 def main():
@@ -40,6 +41,12 @@ def main():
     print(f"\nMeasuring the qubits...")
     print(f"Measurement of Qubit 1: {qubit1}")
     print(f"Measurement of Qubit 2: {qubit2}")
+
+    print(f"\nCreating a quantum circuit runner...")
+    circuit_runner = QuantumCircuitRunner(circuit=qc)
+    running_times = 100
+    print(f"Running the quantum circuit {running_times} times...")
+    circuit_runner.run_circuit_multiple_times(num_times=running_times, show_plot=True)
 
 
 if __name__ == "__main__":
