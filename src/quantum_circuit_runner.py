@@ -34,9 +34,9 @@ class QuantumCircuitRunner:
             raise ValueError("No results to plot.")
 
         flat_results = self.__processed_results(results)
-        plt.hist(flat_results, bins=np.arange(self.circuit.input_size + 1) - 0.5, align="mid", rwidth=0.8)
+        plt.hist(flat_results, bins=np.arange(self.circuit.input_size + 1) - 0.5, align="mid", rwidth=0.8, density=True)
         plt.xlabel("Measurement Outcome")
-        plt.ylabel("Frequency")
+        plt.ylabel("Probability Density")
         plt.title(f"Measurement Results\nNumber of runnings: {len(results)}")
         plt.xticks(range(self.circuit.input_size))
         plt.grid(axis="y", alpha=0.75)
