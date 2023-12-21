@@ -1,9 +1,9 @@
 import unittest
 import numpy as np
 from src.exceptions.vector_exception import NotBraVectorError, NotKetVectorError, VectorError
-from src.utilities.quantum_constants import ONE_STATE_KET, ZERO_STATE_KET
+from src.utilities.quantum_constants import ONE_STATE_KET, ZERO_STATE_KET, TWO_QUBIT_SHARED_SPACE
 from src.utilities.quantum_math import calculate_density_matrix, get_bra_vector, get_ket_vector, is_ket_vector, is_bra_vector, is_entangled, get_linear_dependence_on_basis_vectors, \
-    get_qubit_states_from_shared_space
+    get_qubit_states_from_shared_space, get_base_shared_space_from_two_qubit_states
 
 
 class TestVectorOperations(unittest.TestCase):
@@ -113,6 +113,21 @@ class TestVectorOperations(unittest.TestCase):
         expected_right_qubit = (1 / np.sqrt(2)) * (ONE_STATE_KET - ZERO_STATE_KET)
         np.testing.assert_array_almost_equal(left_qubit, expected_left_qubit)
         np.testing.assert_array_almost_equal(right_qubit, expected_right_qubit)
+
+    def test_get_base_shared_space_from_two_qubit_states(self):
+        with self.subTest('call function with base qubits'):
+            qubit_one_state = ONE_STATE_KET
+            qubit_two_state = ONE_STATE_KET
+            expected_result = TWO_QUBIT_SHARED_SPACE[3]
+            result = get_base_shared_space_from_two_qubit_states(qubit_one_state, qubit_two_state)
+            self.assertEqual(result, expected_result)
+
+        with self.subTest('call function with mixed qubits'):
+            qubit_one_state = (1 / np.sqrt(2)) * (ZERO_STATE_KET - ONE_STATE_KET)
+            qubit_two_state = ONE_STATE_KET
+            expected_result = None
+            result = get_base_shared_space_from_two_qubit_states(qubit_one_state, qubit_two_state)
+            self.assertEqual(result, expected_result)
 
 
 if __name__ == '__main__':
