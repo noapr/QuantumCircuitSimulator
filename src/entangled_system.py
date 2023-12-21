@@ -1,6 +1,5 @@
 from sympy import nsimplify, sqrt
-
-from src.utilities.quantum_constants import TWO_QUBIT_SHARED_SPACE_BASE_STRING
+from src.utilities.quantum_constants import TWO_QUBIT_SHARED_SPACE
 from src.utilities.quantum_math import get_linear_dependence_on_basis_vectors
 
 
@@ -15,6 +14,6 @@ class EntangledSystem:
         entangled_system_string = ''
         for i in range(len(linear_dependence)):
             if linear_dependence[i] != 0:
-                entangled_system_string += f"{linear_dependence[i]} * {TWO_QUBIT_SHARED_SPACE_BASE_STRING[i]} +"
+                entangled_system_string += f"{linear_dependence[i]} * {TWO_QUBIT_SHARED_SPACE[i].str} +"
         entangled_system_string = entangled_system_string[:-2]
         return entangled_system_string
