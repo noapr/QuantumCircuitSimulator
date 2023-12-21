@@ -6,7 +6,7 @@ from src.qubit import Qubit
 # Configure the logging module to print to the console
 RED = '\x1b[31m'
 RESET = '\x1b[0m'
-logging.basicConfig(stream=sys.stdout, level=logging.DEBUG, format=RED+'%(asctime)s [%(levelname)s]: %(message)s'+RESET)
+logging.basicConfig(stream=sys.stdout, level=logging.DEBUG, format=RED + '%(asctime)s [%(levelname)s]: %(message)s' + RESET)
 
 
 def main():
